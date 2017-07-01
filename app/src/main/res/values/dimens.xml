@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="poker_item_text_size">50sp</dimen>
+    <dimen name="poker_item_border_size">8dp</dimen>
+
+    <dimen name="poker_selected_item_border_size">8dp</dimen>
+    <dimen name="poker_selected_item_text_size">100sp</dimen>
+
+</resources>

@@ -1,0 +1,31 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
+
+    </style>
+
+    <style name="DialogBlackColorTheme" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+
+        <!--
+            if android:windowIsFloating is set to true
+            It will make dialog's width cannot expand to full width
+            We need to set windowMinWidthMajor and windowMinWidthMinor to 100%
+            To make dialog's width fully expand.
+        -->
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.8</item>
+        <item name="android:windowAnimationStyle">@style/DialogFadeInAnimation</item>
+    </style>
+
+    <style name="DialogFadeInAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+</resources>
