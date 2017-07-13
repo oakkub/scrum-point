@@ -80,8 +80,9 @@ class PokerView @JvmOverloads constructor(context: Context,
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
+        val action = event.action
 
-        return when (event.action) {
+        return when (action) {
             MotionEvent.ACTION_UP -> {
                 handleActionUpEvent(x, y)
                 true
