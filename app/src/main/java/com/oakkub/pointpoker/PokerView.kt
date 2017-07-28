@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import com.oakkub.pointpoker.letIf
 import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 import kotlin.properties.Delegates
 
@@ -156,18 +157,19 @@ class PokerView @JvmOverloads constructor(context: Context,
     }
 
     private fun handleActionUpEvent(x: Float, y: Float) {
-        pokerBoundsItems.indexOfFirst { it.contains(x, y) }
-                .filter { it in pokerItems.indices }
-                .filter { selectedBoundsItem?.contains(x, y) ?: false }
-                .run {
-                    itemSelectedListener?.let {
-                        it(pokerItems[this])
-                    }
-                    selectedBoundsItem?.let {
-                        redrawSpecificBounds(it)
-                    }
-                    selectedBoundsItem = null
+        val actionUpAtIndex: Int = pokerBoundsItems.indexOfFirst { it.contains(x, y) }
+                .takeIf { it in pokerBoundsItems.indices } ?: return
+
+        selectedBoundsItem?.let {
+            redrawSpecificBounds(it)
+
+            if (it.contains(x, y)) {
+                itemSelectedListener?.let {
+                    it(pokerItems[actionUpAtIndex])
                 }
+            }
+        }
+        selectedBoundsItem = null
     }
 
     private fun handleActionDownEvent(x: Float, y: Float) {
@@ -177,8 +179,8 @@ class PokerView @JvmOverloads constructor(context: Context,
     }
 
     private fun handleActionCancelEvent(x: Float, y: Float) {
-        pokerBoundsItems.firstOrNull { it.contains(x, y) }?.apply {
-            redrawSpecificBounds(this)
+        selectedBoundsItem?.let {
+            redrawSpecificBounds(it)
         }
         selectedBoundsItem = null
     }
@@ -205,8 +207,3 @@ class PokerView @JvmOverloads constructor(context: Context,
     }
 
 }
-
-inline fun Int.filter(func: (Int) -> Boolean): Int = if (func(this)) this else -1
-inline fun Long.filter(func: (Long) -> Boolean): Long = if (func(this)) this else -1L
-inline fun Float.filter(func: (Float) -> Boolean): Float = if (func(this)) this else -1.0f
-inline fun Double.filter(func: (Double) -> Boolean): Double = if (func(this)) this else -1.0

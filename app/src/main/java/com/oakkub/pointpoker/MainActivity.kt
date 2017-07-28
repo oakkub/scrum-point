@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.ScrollView
+import com.oakkub.pointpoker.showIfFailThenAllowStateLoss
 
 class MainActivity : Activity() {
 
@@ -35,7 +36,7 @@ class MainActivity : Activity() {
         pokerView.pokerItems.addAll(pokerItems)
         pokerView.setOnItemSelectedListener {
             val dialog = SelectedPokerDialogFragment.create(it)
-            dialog.show(fragmentManager, "selectedPoker")
+            dialog.showIfFailThenAllowStateLoss(fragmentManager, "selectedPoker")
         }
 
         return pokerView
@@ -44,7 +45,7 @@ class MainActivity : Activity() {
     private fun setStatusBarColor() {
         if (Build.VERSION.SDK_INT >= 21) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.DKGRAY
+            window.statusBarColor = 0xFF00BFA5.toInt()
         }
     }
 
