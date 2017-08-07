@@ -1,14 +1,15 @@
-package com.oakkub.simplepoker
+package com.oakkub.pointpoker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import com.oakkub.pointpoker.letIf
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
+import com.oakkub.simplepoker.R
 import kotlin.properties.Delegates
 
 /**
@@ -71,10 +72,10 @@ class PokerView @JvmOverloads constructor(context: Context,
         val measuredWidth = MeasureSpec.getSize(widthMeasureSpec)
 
         val pokerItemCountReminder = pokerItems.size % column
-        val offsetSpace = space / 2f
-        val newHeight = (measuredWidth / column) * ((pokerItems.size + pokerItemCountReminder) / column) + offsetSpace.toInt()
+        val offsetSpace = space
+        val newHeight = ((measuredWidth * 1.4f) / column) * ((pokerItems.size + pokerItemCountReminder) / column) - offsetSpace.toInt()
 
-        val newMeasureSpecHeight = MeasureSpec.makeMeasureSpec(newHeight, MeasureSpec.EXACTLY)
+        val newMeasureSpecHeight = MeasureSpec.makeMeasureSpec(newHeight.toInt(), MeasureSpec.EXACTLY)
         setMeasuredDimension(widthMeasureSpec, newMeasureSpecHeight)
     }
 
@@ -93,7 +94,7 @@ class PokerView @JvmOverloads constructor(context: Context,
                 true
             }
             MotionEvent.ACTION_CANCEL -> {
-                handleActionCancelEvent(x, y)
+                handleActionCancelEvent()
                 true
             }
             else -> {
@@ -106,7 +107,7 @@ class PokerView @JvmOverloads constructor(context: Context,
     override fun onDraw(canvas: Canvas) {
         val widthMinusBorderSpace = measuredWidth - ((space * (column - 1)))
         val cardWidth: Float = widthMinusBorderSpace / column
-        val cardHeight: Float = cardWidth
+        val cardHeight: Float = cardWidth * 1.4f
 
         var left = 0f
         var top = 0f
@@ -178,7 +179,7 @@ class PokerView @JvmOverloads constructor(context: Context,
         }
     }
 
-    private fun handleActionCancelEvent(x: Float, y: Float) {
+    private fun handleActionCancelEvent() {
         selectedBoundsItem?.let {
             redrawSpecificBounds(it)
         }

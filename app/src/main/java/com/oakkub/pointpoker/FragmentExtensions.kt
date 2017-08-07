@@ -1,6 +1,7 @@
 package com.oakkub.pointpoker
 
 import android.app.DialogFragment
+import android.app.Fragment
 import android.app.FragmentManager
 import java.lang.IllegalStateException
 
@@ -14,5 +15,13 @@ fun DialogFragment.showIfFailThenAllowStateLoss(fragmentManager: FragmentManager
         fragmentManager.beginTransaction()
                 .add(this, tag)
                 .commitAllowingStateLoss()
+    }
+}
+
+fun DialogFragment.dismissIfFailThenAllowStateLoss() {
+    try {
+        dismiss()
+    } catch (e: IllegalStateException) {
+        dismissAllowingStateLoss()
     }
 }

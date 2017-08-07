@@ -1,13 +1,15 @@
-package com.oakkub.simplepoker
+package com.oakkub.pointpoker
 
 import android.app.DialogFragment
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.TextView
+import com.oakkub.simplepoker.R
+import com.oakkub.simplepoker.getCompatColor
 
 
 /**
@@ -16,7 +18,7 @@ import android.widget.TextView
 class SelectedPokerDialogFragment : DialogFragment() {
 
     companion object {
-        private val ARGS_TEXT = "TEXT"
+        private const val ARGS_TEXT = "TEXT"
 
         fun create(text: String): SelectedPokerDialogFragment {
             val args = Bundle()
@@ -39,15 +41,19 @@ class SelectedPokerDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val text = arguments.getString(ARGS_TEXT)
+        val pokerText = arguments.getString(ARGS_TEXT)
 
         val itemTextView: TextView = view.findViewById(R.id.itemTextView)
-        itemTextView.text = text
-        itemTextView.setOnClickListener {
-            dismissAllowingStateLoss()
+        itemTextView.apply {
+            text = pokerText
+            setOnClickListener {
+                dismissIfFailThenAllowStateLoss()
+            }
         }
 
-        setRoundedBackground(itemTextView, 0xFF1DE9B6.toInt(), 0xFFFFFFFF.toInt())
+        setRoundedBackground(itemTextView,
+                backgroundColor = activity.getCompatColor(R.color.colorPrimary),
+                borderColor = Color.WHITE)
     }
 
     override fun onResume() {

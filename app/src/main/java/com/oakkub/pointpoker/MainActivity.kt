@@ -1,56 +1,77 @@
-package com.oakkub.simplepoker
+package com.oakkub.pointpoker
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
+import android.view.ViewGroup
 import android.widget.ScrollView
-import com.oakkub.pointpoker.showIfFailThenAllowStateLoss
+import com.oakkub.simplepoker.*
 
 class MainActivity : Activity() {
 
+    private val scrollableContainerView: ScrollView by lazy(LazyThreadSafetyMode.NONE) {
+        createScrollingContentContainer()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setStatusBarColor()
-
-        val scrollableContainerView = createContainerScrollView()
-        scrollableContainerView.id = View.generateViewId()
-        scrollableContainerView + createPokerView()
-
         super.onCreate(savedInstanceState)
         setContentView(scrollableContainerView)
     }
 
+    private fun createScrollingContentContainer(): ScrollView {
+        return ScrollView(this).fullExpand().apply {
+            id = View.generateViewId()
+
+            fromLolipopOrAbove {
+                applyTranslucentContent(this)
+                applyViewPaddingWhenContentIsTranslucent(this)
+            }
+
+            plus(createPokerView())
+        }
+    }
+
+    private fun applyTranslucentContent(view: View) {
+        view.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
+    private fun applyViewPaddingWhenContentIsTranslucent(container: ViewGroup) {
+        container.setOnApplyWindowInsetsListener { _, windowInsets ->
+            container.apply {
+                clipToPadding = false
+                setPadding(
+                        windowInsets.systemWindowInsetLeft,
+                        windowInsets.systemWindowInsetTop,
+                        windowInsets.systemWindowInsetRight,
+                        windowInsets.systemWindowInsetBottom)
+                setOnApplyWindowInsetsListener(null)
+            }
+            windowInsets.consumeSystemWindowInsets()
+        }
+    }
+
     private fun createPokerView(): PokerView {
-        val pokerItems = arrayOf("0", "1/2", "1", "2", "3", "5", "8", "13", "20", "40", "100", "?", "∞", "\u2615")
+        val items = arrayOf("0", "1/2", "1", "2", "3", "5", "8", "13", "20", "40", "100", "?", "∞", "\u2615")
 
-        val pokerView = PokerView(this).fullWidthWrapHeight()
-        pokerView.id = View.generateViewId()
+        return PokerView(this).fullWidthWrapHeight().apply {
+            id = View.generateViewId()
+            selectedColor = PokerColors(
+                    background = getCompatColor(R.color.colorPrimary),
+                    backgroundPressed = getCompatColor(R.color.colorPrimaryDark),
+                    text = Color.WHITE)
+            pokerItems.addAll(items)
 
-        pokerView.selectedColor = PokerColors(
-                background = 0xFF1DE9B6.toInt(),
-                backgroundPressed = 0xFF00BFA5.toInt(),
-                text = Color.WHITE)
-
-        pokerView.pokerItems.addAll(pokerItems)
-        pokerView.setOnItemSelectedListener {
-            val dialog = SelectedPokerDialogFragment.create(it)
-            dialog.showIfFailThenAllowStateLoss(fragmentManager, "selectedPoker")
-        }
-
-        return pokerView
-    }
-
-    private fun setStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = 0xFF00BFA5.toInt()
+            setOnItemSelectedListener {
+                val dialog = SelectedPokerDialogFragment.create(it)
+                dialog.showIfFailThenAllowStateLoss(fragmentManager, "selectedPoker")
+            }
         }
     }
-
-    private fun createContainerScrollView() = ScrollView(this).fullExpand().apply {
-        setBackgroundColor(0xFFFFFFFF.toInt())
-    }
-
 }

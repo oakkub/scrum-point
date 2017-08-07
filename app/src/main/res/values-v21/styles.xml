@@ -1,7 +1,10 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
-
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor">@color/colorNavigationBar</item>
+        <item name="android:colorEdgeEffect">@color/colorEdgeEffect</item>
     </style>
 
 </resources>
