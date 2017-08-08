@@ -15,9 +15,8 @@
             We need to set windowMinWidthMajor and windowMinWidthMinor to 100%
             To make dialog's width fully expand.
         -->
-        <item name="android:windowMinWidthMajor">100%</item>
-        <item name="android:windowMinWidthMinor">100%</item>
-
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.8</item>
         <item name="android:windowAnimationStyle">@style/DialogFadeInAnimation</item>

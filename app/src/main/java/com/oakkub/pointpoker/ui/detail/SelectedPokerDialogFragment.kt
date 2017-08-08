@@ -1,4 +1,4 @@
-package com.oakkub.pointpoker
+package com.oakkub.pointpoker.ui.detail
 
 import android.app.DialogFragment
 import android.graphics.Color
@@ -8,8 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.oakkub.pointpoker.extensions.dismissIfFailThenAllowStateLoss
 import com.oakkub.simplepoker.R
-import com.oakkub.simplepoker.getCompatColor
+import com.oakkub.pointpoker.helpers.SelectedColorSharedPreference
 
 
 /**
@@ -52,17 +53,8 @@ class SelectedPokerDialogFragment : DialogFragment() {
         }
 
         setRoundedBackground(itemTextView,
-                backgroundColor = activity.getCompatColor(R.color.colorPrimary),
+                backgroundColor = SelectedColorSharedPreference(activity).getSelectedColor().color.toInt(),
                 borderColor = Color.WHITE)
-    }
-
-    override fun onResume() {
-        val windowParams = dialog.window.attributes
-        windowParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-        windowParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-        dialog.window.attributes = windowParams
-
-        super.onResume()
     }
 
     private fun setRoundedBackground(view: View, backgroundColor: Int, borderColor: Int) {

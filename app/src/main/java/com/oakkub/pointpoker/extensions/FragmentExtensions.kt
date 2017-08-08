@@ -1,4 +1,4 @@
-package com.oakkub.pointpoker
+package com.oakkub.pointpoker.extensions
 
 import android.app.DialogFragment
 import android.app.Fragment

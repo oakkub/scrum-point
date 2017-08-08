@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemTextView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp">
-
-    <TextView
-        android:id="@+id/itemTextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/poker_selected_item_text_size" />
-
-</FrameLayout>
+    android:layout_margin="@dimen/poker_selected_item_content_padding"
+    android:gravity="center"
+    android:minHeight="@dimen/poker_selected_item_min_height"
+    android:textColor="@android:color/white"
+    android:textSize="@dimen/poker_selected_item_text_size" />

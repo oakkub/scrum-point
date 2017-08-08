@@ -4,7 +4,12 @@
     <dimen name="poker_item_text_size">50sp</dimen>
     <dimen name="poker_item_border_size">8dp</dimen>
 
+    <dimen name="poker_selected_item_min_height">400dp</dimen>
+    <dimen name="poker_selected_item_content_padding">32dp</dimen>
     <dimen name="poker_selected_item_border_size">8dp</dimen>
-    <dimen name="poker_selected_item_text_size">100sp</dimen>
+    <dimen name="poker_selected_item_text_size">120sp</dimen>
+
+    <dimen name="toolbar_text_size">24sp</dimen>
+    <dimen name="settings_button_text_size">24sp</dimen>
 
 </resources>

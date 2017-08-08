@@ -1,4 +1,4 @@
-package com.oakkub.pointpoker
+package com.oakkub.pointpoker.custom_views
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -24,6 +24,10 @@ data class PokerColors(val background: Int = 0xFF000000.toInt(),
 class PokerView @JvmOverloads constructor(context: Context,
                                           attrs: AttributeSet? = null,
                                           defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+
+    companion object {
+        private const val HEIGHT_FACTOR = 1.4f
+    }
 
     val column: Int by Delegates.observable(3) {
         _, _, _ ->
@@ -73,12 +77,13 @@ class PokerView @JvmOverloads constructor(context: Context,
 
         val pokerItemCountReminder = pokerItems.size % column
         val offsetSpace = space
-        val newHeight = ((measuredWidth * 1.4f) / column) * ((pokerItems.size + pokerItemCountReminder) / column) - offsetSpace.toInt()
+        val newHeight = ((measuredWidth * HEIGHT_FACTOR) / column) * ((pokerItems.size + pokerItemCountReminder) / column) - offsetSpace.toInt()
 
         val newMeasureSpecHeight = MeasureSpec.makeMeasureSpec(newHeight.toInt(), MeasureSpec.EXACTLY)
         setMeasuredDimension(widthMeasureSpec, newMeasureSpecHeight)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
@@ -107,7 +112,7 @@ class PokerView @JvmOverloads constructor(context: Context,
     override fun onDraw(canvas: Canvas) {
         val widthMinusBorderSpace = measuredWidth - ((space * (column - 1)))
         val cardWidth: Float = widthMinusBorderSpace / column
-        val cardHeight: Float = cardWidth * 1.4f
+        val cardHeight: Float = cardWidth * HEIGHT_FACTOR
 
         var left = 0f
         var top = 0f
@@ -151,6 +156,7 @@ class PokerView @JvmOverloads constructor(context: Context,
             val end = text.length
             val textX = bounds.left + (cardWidth / 2f) + text.middleX(textPaint)
             val textY = bounds.top + (cardHeight / 2f) + text.middleY(textPaint)
+
             canvas.drawText(text, start, end, textX, textY, textPaint)
 
             pokerBoundsItems.add(bounds)
@@ -158,7 +164,8 @@ class PokerView @JvmOverloads constructor(context: Context,
     }
 
     private fun handleActionUpEvent(x: Float, y: Float) {
-        val actionUpAtIndex: Int = pokerBoundsItems.indexOfFirst { it.contains(x, y) }
+        val actionUpAtIndex: Int = pokerBoundsItems
+                .indexOfFirst { it.contains(x, y) }
                 .takeIf { it in pokerBoundsItems.indices } ?: return
 
         selectedBoundsItem?.let {
