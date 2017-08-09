@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
-import com.oakkub.pointpoker.extensions.fullWidthWrapHeight
+import com.oakkub.pointpoker.custom_views.CustomToolbar
+import com.oakkub.pointpoker.extensions.matchWidthWrapHeight
 import com.oakkub.pointpoker.extensions.wrapWidthWrapHeight
-import com.oakkub.pointpoker.helpers.createToolbarTextView
 import com.oakkub.pointpoker.ui.settings.color.ChangeColorActivity
 import com.oakkub.simplepoker.R
 
@@ -22,11 +22,11 @@ class SettingsActivity : Activity() {
         setContentView(createContainer())
     }
 
-    fun createContainer() = LinearLayout(this).fullWidthWrapHeight().apply {
+    fun createContainer() = LinearLayout(this).matchWidthWrapHeight().apply {
         orientation = LinearLayout.VERTICAL
 
-        val toolbar = createToolbarTextView(this@SettingsActivity).apply {
-            text = getString(R.string.settings_title)
+        val toolbar = CustomToolbar(context).matchWidthWrapHeight().apply {
+            title = getString(R.string.settings_title)
         }
         addView(toolbar)
         addView(createChangeColorButton())

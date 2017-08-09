@@ -2,12 +2,13 @@ package com.oakkub.pointpoker.ui.settings.color
 
 import android.app.Activity
 import android.os.Bundle
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import com.oakkub.pointpoker.custom_views.ColorGridListView
-import com.oakkub.pointpoker.extensions.fullExpand
-import com.oakkub.pointpoker.extensions.fullWidthWrapHeight
-import com.oakkub.pointpoker.helpers.createToolbarTextView
+import com.oakkub.pointpoker.custom_views.CustomToolbar
+import com.oakkub.pointpoker.extensions.matchWidthMatchHeight
+import com.oakkub.pointpoker.extensions.matchWidthWrapHeight
 import com.oakkub.simplepoker.R
 
 /**
@@ -18,25 +19,33 @@ class ChangeColorActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val container = createScrollingContainer()
-        setContentView(container)
+        val root = LinearLayout(this).matchWidthMatchHeight().apply {
+            orientation = LinearLayout.VERTICAL
+
+            val toolbar = CustomToolbar(context).matchWidthWrapHeight().apply {
+                title = getString(R.string.change_color_title)
+                onBackIconClickListener = {
+                    finish()
+                }
+            }
+            val container = createScrollingContainer()
+
+            addView(toolbar)
+            addView(container)
+        }
+
+        setContentView(root)
     }
 
-    fun createScrollingContainer() = ScrollView(this).fullExpand().apply {
+    fun createScrollingContainer() = ScrollView(this).matchWidthMatchHeight().apply {
         addView(createContainer())
     }
 
-    fun createContainer() = LinearLayout(this).fullWidthWrapHeight().apply {
-        orientation = LinearLayout.VERTICAL
-
-        val toolbar = createToolbarTextView(this@ChangeColorActivity).apply {
-            text = getString(R.string.change_color_title)
-        }
-        addView(toolbar)
+    fun createContainer() = LinearLayout(this).matchWidthWrapHeight().apply {
         addView(createColorGridView())
     }
 
-    fun createColorGridView() = ColorGridListView(this).fullWidthWrapHeight().apply {
+    fun createColorGridView() = ColorGridListView(this).matchWidthWrapHeight().apply {
         val preparedColorList = arrayOf(
                 0xFF1DE9B6, // Default color (Cannot use color resource)
                 0xFFEE0000,

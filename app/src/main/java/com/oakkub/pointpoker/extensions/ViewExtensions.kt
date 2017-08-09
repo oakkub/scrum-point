@@ -4,13 +4,14 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.os.Build
+import android.util.TypedValue
 
 
 /**
  * Created by oakkub on 6/7/2017 AD.
  */
 
-fun <V : View> V.fullExpand(): V {
+fun <V : View> V.matchWidthMatchHeight(): V {
     val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
@@ -19,7 +20,7 @@ fun <V : View> V.fullExpand(): V {
     return this
 }
 
-fun <V : View> V.fullWidthWrapHeight(): V {
+fun <V : View> V.matchWidthWrapHeight(): V {
     val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -35,4 +36,8 @@ fun <V: View> V.wrapWidthWrapHeight(): V {
     )
     layoutParams = params
     return this
+}
+
+fun View.setAllPadding(padding: Int) {
+    setPaddingRelative(padding, padding, padding, padding)
 }

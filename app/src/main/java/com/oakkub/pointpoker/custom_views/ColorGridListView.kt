@@ -9,9 +9,9 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.oakkub.pointpoker.extensions.dp
 import com.oakkub.pointpoker.helpers.SelectedColor
 import com.oakkub.pointpoker.helpers.SelectedColorSharedPreference
-import com.oakkub.pointpoker.ui.detail.dp
 import kotlin.properties.Delegates
 
 /**

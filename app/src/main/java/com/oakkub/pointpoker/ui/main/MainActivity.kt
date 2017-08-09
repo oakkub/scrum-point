@@ -14,7 +14,6 @@ import com.oakkub.pointpoker.custom_views.PokerView
 import com.oakkub.pointpoker.extensions.*
 import com.oakkub.pointpoker.helpers.SelectedColorSharedPreference
 import com.oakkub.pointpoker.ui.detail.SelectedPokerDialogFragment
-import com.oakkub.pointpoker.ui.settings.SettingsActivity
 import com.oakkub.pointpoker.ui.settings.color.ChangeColorActivity
 
 class MainActivity : Activity() {
@@ -51,7 +50,7 @@ class MainActivity : Activity() {
     }
 
     private fun createScrollingContentContainer(): ScrollView {
-        return ScrollView(this).fullExpand().apply {
+        return ScrollView(this).matchWidthMatchHeight().apply {
             id = View.generateViewId()
 
             fromLolipopOrAbove {
@@ -105,7 +104,7 @@ class MainActivity : Activity() {
                 coffeeEmoji,
                 verticalEllipsis)
 
-        return PokerView(this).fullWidthWrapHeight().apply {
+        return PokerView(this).matchWidthWrapHeight().apply {
             id = View.generateViewId()
             selectedColor = PokerColors(
                     background = colorPrefs.getSelectedColor().color.toInt(),

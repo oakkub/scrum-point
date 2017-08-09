@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.oakkub.pointpoker.extensions.dismissIfFailThenAllowStateLoss
+import com.oakkub.pointpoker.extensions.dp
 import com.oakkub.simplepoker.R
 import com.oakkub.pointpoker.helpers.SelectedColorSharedPreference
 
@@ -67,6 +68,3 @@ class SelectedPokerDialogFragment : DialogFragment() {
     }
 
 }
-
-val Int.dp
-    get() = this / android.content.res.Resources.getSystem().displayMetrics.density

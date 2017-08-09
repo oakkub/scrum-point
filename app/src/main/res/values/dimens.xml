@@ -10,6 +10,7 @@
     <dimen name="poker_selected_item_text_size">120sp</dimen>
 
     <dimen name="toolbar_text_size">24sp</dimen>
+    <dimen name="toolbar_icon_min_size">56dp</dimen>
     <dimen name="settings_button_text_size">24sp</dimen>
 
 </resources>
