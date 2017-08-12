@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.os.Build
 import android.util.TypedValue
+import android.widget.TextView
 
 
 /**
@@ -40,4 +41,8 @@ fun <V: View> V.wrapWidthWrapHeight(): V {
 
 fun View.setAllPadding(padding: Int) {
     setPaddingRelative(padding, padding, padding, padding)
+}
+
+fun TextView.setTextSizeInPixel(px: Float) {
+    setTextSize(TypedValue.COMPLEX_UNIT_PX, px)
 }

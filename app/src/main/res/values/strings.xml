@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Scrum Point</string>
+
+    <string name="point_detail_ready_state">Ready</string>
+    <string name="point_detail_touch_to_show_point">Touch or shake to show point</string>
+    <string name="point_detail_touch_to_close">Touch to close</string>
+
     <string name="settings_title">Settings</string>
     <string name="settings_change_button_text">Change card\'s color</string>
-    <string name="change_color_title">Select color</string>
+    <string name="settings_change_color_title">Select color</string>
 </resources>

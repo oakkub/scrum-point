@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/itemTextView"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pointDetailContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/poker_selected_item_content_padding"
-    android:gravity="center"
-    android:minHeight="@dimen/poker_selected_item_min_height"
-    android:textColor="@android:color/white"
-    android:textSize="@dimen/poker_selected_item_text_size" />
+    android:minHeight="@dimen/poker_selected_item_min_height">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pointDetailTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/poker_selected_item_content_padding"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/poker_selected_item_point_text_size" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pointDetailMessageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/poker_selected_item_content_padding"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/poker_selected_item_message_text_size" />
+
+
+</FrameLayout>

@@ -2,7 +2,6 @@ package com.oakkub.pointpoker.ui.settings.color
 
 import android.app.Activity
 import android.os.Bundle
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import com.oakkub.pointpoker.custom_views.ColorGridListView
@@ -23,7 +22,7 @@ class ChangeColorActivity : Activity() {
             orientation = LinearLayout.VERTICAL
 
             val toolbar = CustomToolbar(context).matchWidthWrapHeight().apply {
-                title = getString(R.string.change_color_title)
+                title = getString(R.string.settings_change_color_title)
                 onBackIconClickListener = {
                     finish()
                 }
