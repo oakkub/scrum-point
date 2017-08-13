@@ -21,10 +21,10 @@ class CustomToolbar(context: Context,
 
     private val backIconTextView: TextView = TextView(context).apply {
         text = "<"
-        textSize = 36f
         gravity = Gravity.CENTER
         minimumWidth = resources.getDimensionPixelSize(R.dimen.toolbar_icon_min_size)
 
+        setTextSizeInPixel(resources.getDimension(R.dimen.toolbar_back_text_size))
         setTextColor(Color.BLACK)
         setBackgroundResource(context.getSelectableItemBackgroundResource())
 
@@ -34,9 +34,9 @@ class CustomToolbar(context: Context,
     }
     private val titleTextView: TextView = TextView(context).apply {
         text = ""
-        textSize = 24f
         gravity = Gravity.START or Gravity.CENTER_VERTICAL
 
+        setTextSizeInPixel(resources.getDimension(R.dimen.toolbar_text_size))
         setTextColor(Color.BLACK)
     }
 
@@ -56,9 +56,9 @@ class CustomToolbar(context: Context,
         gravity = Gravity.CENTER_VERTICAL
 
         addView(backIconTextView)
-        addView(titleTextView, getWeightLayoutParams(1f))
+        addView(titleTextView, getWidthWeightLayoutParams(1f))
     }
 
-    private fun getWeightLayoutParams(weight: Float) = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, weight)
+    private fun getWidthWeightLayoutParams(weight: Float) = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, weight)
 
 }
