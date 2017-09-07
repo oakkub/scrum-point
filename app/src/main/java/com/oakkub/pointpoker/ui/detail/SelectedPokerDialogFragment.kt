@@ -96,7 +96,7 @@ class SelectedPokerDialogFragment : DialogFragment() {
 
     private fun initShakeDetector() {
         shakeDetector.onShakeListener = {
-            if (it == 2) {
+            if (it == 1) {
                 didUserShakeDevice = true
                 showPointDetail(didUserShakeDevice)
             }
@@ -104,12 +104,13 @@ class SelectedPokerDialogFragment : DialogFragment() {
     }
 
     private fun setRoundedBackground(view: View, backgroundColor: Int, borderColor: Int) {
-        val shape = GradientDrawable()
-        shape.shape = GradientDrawable.RECTANGLE
-        shape.cornerRadius = 64.dp
-        shape.setColor(backgroundColor)
-        shape.setStroke(resources.getDimensionPixelSize(R.dimen.poker_selected_item_border_size), borderColor)
-        view.background = shape
+        val gradientDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 64.dp
+            setColor(backgroundColor)
+            setStroke(resources.getDimensionPixelSize(R.dimen.poker_selected_item_border_size), borderColor)
+        }
+        view.background = gradientDrawable
     }
 
     private fun showPointDetail(didUserShakeDevice: Boolean) {
@@ -117,21 +118,21 @@ class SelectedPokerDialogFragment : DialogFragment() {
 
         if (didUserShakeDevice) {
             pointDetailTextView.apply {
+                text = arguments.getString(ARGS_TEXT)
                 setTextSizeInPixel(resources.getDimension(R.dimen.poker_selected_item_point_text_size))
                 setOnClickListener {
                     dismissIfFailThenAllowStateLoss()
                 }
-                text = arguments.getString(ARGS_TEXT)
             }
             pointDetailMessageTextView.text = getString(R.string.point_detail_touch_to_close)
         } else {
             pointDetailTextView.apply {
+                text = getString(R.string.point_detail_ready_state)
                 setTextSizeInPixel(resources.getDimension(R.dimen.poker_selected_item_ready_point_text_size))
                 setOnClickListener {
                     this@SelectedPokerDialogFragment.didUserShakeDevice = true
                     showPointDetail(this@SelectedPokerDialogFragment.didUserShakeDevice)
                 }
-                text = getString(R.string.point_detail_ready_state)
             }
             pointDetailMessageTextView.text = getString(R.string.point_detail_touch_to_show_point)
         }
