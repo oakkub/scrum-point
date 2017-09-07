@@ -4,7 +4,6 @@ import android.app.DialogFragment
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +26,7 @@ class SelectedPokerDialogFragment : DialogFragment() {
         private const val ARGS_TEXT = "TEXT"
         private const val STATE_DID_USER_SHAKE_DEVICE = "DID_USER_SHAKE_DEVICE"
 
+        @JvmStatic
         fun create(text: String): SelectedPokerDialogFragment {
             val args = Bundle()
             args.putString(ARGS_TEXT, text)
@@ -40,6 +40,7 @@ class SelectedPokerDialogFragment : DialogFragment() {
     private lateinit var pointDetailContainer: FrameLayout
     private lateinit var pointDetailTextView: TextView
     private lateinit var pointDetailMessageTextView: TextView
+
     private var didUserShakeDevice = false
 
     private val shakeDetector: ShakeDetector by lazy(LazyThreadSafetyMode.NONE) {
@@ -114,28 +115,34 @@ class SelectedPokerDialogFragment : DialogFragment() {
     }
 
     private fun showPointDetail(didUserShakeDevice: Boolean) {
-        TransitionManager.beginDelayedTransition(pointDetailContainer)
-
         if (didUserShakeDevice) {
-            pointDetailTextView.apply {
-                text = arguments.getString(ARGS_TEXT)
-                setTextSizeInPixel(resources.getDimension(R.dimen.poker_selected_item_point_text_size))
-                setOnClickListener {
-                    dismissIfFailThenAllowStateLoss()
-                }
-            }
-            pointDetailMessageTextView.text = getString(R.string.point_detail_touch_to_close)
+            displayPoint()
         } else {
-            pointDetailTextView.apply {
-                text = getString(R.string.point_detail_ready_state)
-                setTextSizeInPixel(resources.getDimension(R.dimen.poker_selected_item_ready_point_text_size))
-                setOnClickListener {
-                    this@SelectedPokerDialogFragment.didUserShakeDevice = true
-                    showPointDetail(this@SelectedPokerDialogFragment.didUserShakeDevice)
-                }
-            }
-            pointDetailMessageTextView.text = getString(R.string.point_detail_touch_to_show_point)
+            displayReadyMessage()
         }
+    }
+
+    private fun displayReadyMessage() {
+        pointDetailTextView.apply {
+            text = getString(R.string.point_detail_ready_state)
+            setTextSizeInPixel(resources.getDimension(R.dimen.poker_selected_item_ready_point_text_size))
+            setOnClickListener {
+                this@SelectedPokerDialogFragment.didUserShakeDevice = true
+                showPointDetail(this@SelectedPokerDialogFragment.didUserShakeDevice)
+            }
+        }
+        pointDetailMessageTextView.text = getString(R.string.point_detail_touch_to_show_point)
+    }
+
+    private fun displayPoint() {
+        pointDetailTextView.apply {
+            text = arguments.getString(ARGS_TEXT)
+            setTextSizeInPixel(resources.getDimension(R.dimen.poker_selected_item_point_text_size))
+            setOnClickListener {
+                dismissIfFailThenAllowStateLoss()
+            }
+        }
+        pointDetailMessageTextView.text = getString(R.string.point_detail_touch_to_close)
     }
 
 }
