@@ -29,13 +29,9 @@ class MainActivity : Activity() {
         private const val TAG_SELECTED_CARD_DIALOG = "SELECTED_CARD_DIALOG"
     }
 
-    private val scrollableContainerView: ScrollView by lazy(LazyThreadSafetyMode.NONE) {
-        createScrollingContentContainer()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(scrollableContainerView)
+        setContentView(createScrollingContentContainer())
     }
 
     override fun onResume() {

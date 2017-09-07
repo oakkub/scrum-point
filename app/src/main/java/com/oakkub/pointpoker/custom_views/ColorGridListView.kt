@@ -26,7 +26,7 @@ class ColorGridListView(context: Context,
         SelectedColorSharedPreference(context)
     }
 
-    var itemSelectedListener: ((Pair<Long, Long>) -> Unit)? = null
+    var itemSelectedListener: ((SelectedColor) -> Unit)? = null
     var selectedBlockColor: RectF? = null
 
     var checkedColor: SelectedColor by Delegates.vetoable(colorPrefs.getSelectedColor()) {
@@ -122,7 +122,7 @@ class ColorGridListView(context: Context,
             checkedColor = colorPrefs.getSelectedColor()
 
             itemSelectedListener?.let {
-                it(color to pressedColor)
+                it(SelectedColor(checkedColor.color, checkedColor.pressedColor))
             }
         }
         selectedBlockColor = null
