@@ -1,17 +1,16 @@
 package com.oakkub.pointpoker.ui.main
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ScrollView
 import com.oakkub.pointpoker.custom_views.PokerColors
 import com.oakkub.pointpoker.custom_views.PokerView
-import com.oakkub.pointpoker.extensions.*
+import com.oakkub.pointpoker.extensions.matchWidthMatchHeight
+import com.oakkub.pointpoker.extensions.matchWidthWrapHeight
+import com.oakkub.pointpoker.extensions.showIfFailThenAllowStateLoss
 import com.oakkub.pointpoker.helpers.SelectedColorSharedPreference
 import com.oakkub.pointpoker.ui.detail.SelectedPokerDialogFragment
 import com.oakkub.pointpoker.ui.settings.color.ChangeColorActivity
@@ -52,36 +51,7 @@ class MainActivity : Activity() {
     private fun createScrollingContentContainer(): ScrollView {
         return ScrollView(this).matchWidthMatchHeight().apply {
             id = View.generateViewId()
-
-            fromLolipopOrAbove {
-                applyTranslucentContent(this)
-                applyViewPaddingWhenContentIsTranslucent(this)
-            }
-
             addView(pokerView)
-        }
-    }
-
-    private fun applyTranslucentContent(view: View) {
-        view.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
-    private fun applyViewPaddingWhenContentIsTranslucent(container: ViewGroup) {
-        container.setOnApplyWindowInsetsListener { _, windowInsets ->
-            container.apply {
-                clipToPadding = false
-                setPadding(
-                        windowInsets.systemWindowInsetLeft,
-                        windowInsets.systemWindowInsetTop,
-                        windowInsets.systemWindowInsetRight,
-                        windowInsets.systemWindowInsetBottom)
-                setOnApplyWindowInsetsListener(null)
-            }
-            windowInsets.consumeSystemWindowInsets()
         }
     }
 
