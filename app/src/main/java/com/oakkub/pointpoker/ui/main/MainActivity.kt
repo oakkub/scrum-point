@@ -26,7 +26,6 @@ class MainActivity : Activity() {
     }
 
     companion object {
-        private const val SETTINGS_REQUEST_CODE = 100
         private const val TAG_SELECTED_CARD_DIALOG = "SELECTED_CARD_DIALOG"
     }
 
@@ -39,13 +38,11 @@ class MainActivity : Activity() {
         setContentView(scrollableContainerView)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onResume() {
+        super.onResume()
 
-        if (requestCode == SETTINGS_REQUEST_CODE) {
-            val selectedColor = colorPrefs.getSelectedColor()
-            pokerView.selectedColor = PokerColors(selectedColor.color.toInt(), selectedColor.pressedColor.toInt())
-        }
+        val (selectedColor, pressedColor) = colorPrefs.getSelectedColor()
+        pokerView.selectedColor = PokerColors(selectedColor.toInt(), pressedColor.toInt())
     }
 
     private fun createScrollingContentContainer(): ScrollView {
@@ -85,7 +82,7 @@ class MainActivity : Activity() {
             setOnItemSelectedListener {
                 if (it == verticalEllipsis) {
                     val intent = Intent(this@MainActivity, ChangeColorActivity::class.java)
-                    startActivityForResult(intent, SETTINGS_REQUEST_CODE)
+                    startActivity(intent)
                     return@setOnItemSelectedListener
                 }
 

@@ -1,11 +1,7 @@
 package com.oakkub.pointpoker.extensions
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
-import android.util.TypedValue
 
 /**
  * Created by oakkub on 8/7/2017 AD.
