@@ -26,10 +26,11 @@ class PokerView @JvmOverloads constructor(context: Context,
                                           defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
     companion object {
-        private const val HEIGHT_FACTOR = 1.4f
+        private const val HEIGHT_FACTOR = 1f
+        private const val INITIAL_COLUMN = 3
     }
 
-    val column: Int by Delegates.observable(3) {
+    val column: Int by Delegates.observable(INITIAL_COLUMN) {
         _, _, _ ->
         requestLayout()
     }
@@ -77,7 +78,7 @@ class PokerView @JvmOverloads constructor(context: Context,
 
         val pokerItemCountReminder = pokerItems.size % column
         val offsetSpace = space
-        val newHeight = ((measuredWidth * HEIGHT_FACTOR) / column) * ((pokerItems.size + pokerItemCountReminder) / column) - offsetSpace.toInt()
+        val newHeight = ((measuredWidth * HEIGHT_FACTOR) / column) * ((pokerItems.size + pokerItemCountReminder) / column)
 
         val newMeasureSpecHeight = MeasureSpec.makeMeasureSpec(newHeight.toInt(), MeasureSpec.EXACTLY)
         setMeasuredDimension(widthMeasureSpec, newMeasureSpecHeight)

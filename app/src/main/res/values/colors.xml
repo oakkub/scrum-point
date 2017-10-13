@@ -3,9 +3,5 @@
     <color name="colorPrimary">#FF1DE9B6</color>
     <color name="colorPrimaryDark">#FF00BFA5</color>
     <color name="colorAccent">@color/colorPrimary</color>
-    <color name="colorPrimaryLight">#391de9b6</color>
-    <color name="colorPrimarySemiTransparent">#821de9b6</color>
-    <color name="colorStatusBar">#99000000</color>
-    <color name="colorNavigationBar">#99000000</color>
     <color name="colorEdgeEffect">#BB000000</color>
 </resources>

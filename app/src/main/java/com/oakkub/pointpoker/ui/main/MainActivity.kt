@@ -1,17 +1,16 @@
 package com.oakkub.pointpoker.ui.main
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ScrollView
 import com.oakkub.pointpoker.custom_views.PokerColors
 import com.oakkub.pointpoker.custom_views.PokerView
-import com.oakkub.pointpoker.extensions.*
+import com.oakkub.pointpoker.extensions.matchWidthMatchHeight
+import com.oakkub.pointpoker.extensions.matchWidthWrapHeight
+import com.oakkub.pointpoker.extensions.showIfFailThenAllowStateLoss
 import com.oakkub.pointpoker.helpers.SelectedColorSharedPreference
 import com.oakkub.pointpoker.ui.detail.SelectedPokerDialogFragment
 import com.oakkub.pointpoker.ui.settings.color.ChangeColorActivity
@@ -27,61 +26,25 @@ class MainActivity : Activity() {
     }
 
     companion object {
-        private const val SETTINGS_REQUEST_CODE = 100
         private const val TAG_SELECTED_CARD_DIALOG = "SELECTED_CARD_DIALOG"
-    }
-
-    private val scrollableContainerView: ScrollView by lazy(LazyThreadSafetyMode.NONE) {
-        createScrollingContentContainer()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(scrollableContainerView)
+        setContentView(createScrollingContentContainer())
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onResume() {
+        super.onResume()
 
-        if (requestCode == SETTINGS_REQUEST_CODE) {
-            val selectedColor = colorPrefs.getSelectedColor()
-            pokerView.selectedColor = PokerColors(selectedColor.color.toInt(), selectedColor.pressedColor.toInt())
-        }
+        val (selectedColor, pressedColor) = colorPrefs.getSelectedColor()
+        pokerView.selectedColor = PokerColors(selectedColor.toInt(), pressedColor.toInt())
     }
 
     private fun createScrollingContentContainer(): ScrollView {
         return ScrollView(this).matchWidthMatchHeight().apply {
             id = View.generateViewId()
-
-            fromLolipopOrAbove {
-                applyTranslucentContent(this)
-                applyViewPaddingWhenContentIsTranslucent(this)
-            }
-
             addView(pokerView)
-        }
-    }
-
-    private fun applyTranslucentContent(view: View) {
-        view.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
-    private fun applyViewPaddingWhenContentIsTranslucent(container: ViewGroup) {
-        container.setOnApplyWindowInsetsListener { _, windowInsets ->
-            container.apply {
-                clipToPadding = false
-                setPadding(
-                        windowInsets.systemWindowInsetLeft,
-                        windowInsets.systemWindowInsetTop,
-                        windowInsets.systemWindowInsetRight,
-                        windowInsets.systemWindowInsetBottom)
-                setOnApplyWindowInsetsListener(null)
-            }
-            windowInsets.consumeSystemWindowInsets()
         }
     }
 
@@ -115,7 +78,7 @@ class MainActivity : Activity() {
             setOnItemSelectedListener {
                 if (it == verticalEllipsis) {
                     val intent = Intent(this@MainActivity, ChangeColorActivity::class.java)
-                    startActivityForResult(intent, SETTINGS_REQUEST_CODE)
+                    startActivity(intent)
                     return@setOnItemSelectedListener
                 }
 

@@ -3,13 +3,12 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.oakkub.pointpoker"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 3
-        versionName "3.0"
+        versionCode 5
+        versionName "4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en"
     }
