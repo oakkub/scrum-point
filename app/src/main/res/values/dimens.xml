@@ -7,7 +7,10 @@
     <dimen name="poker_selected_item_min_height">400dp</dimen>
     <dimen name="poker_selected_item_content_padding">32dp</dimen>
     <dimen name="poker_selected_item_border_size">8dp</dimen>
-    <dimen name="poker_selected_item_point_text_size">120sp</dimen>
+    <dimen name="poker_selected_item_point_text_size">150sp</dimen>
+    <dimen name="poker_selected_item_point_single_text_size">230sp</dimen>
+    <dimen name="poker_selected_item_point_double_text_size">190sp</dimen>
+    <dimen name="poker_selected_item_point_emoji_text_size">120sp</dimen>
     <dimen name="poker_selected_item_ready_point_text_size">48sp</dimen>
     <dimen name="poker_selected_item_message_text_size">18sp</dimen>
 

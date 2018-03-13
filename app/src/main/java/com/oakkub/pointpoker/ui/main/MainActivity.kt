@@ -14,6 +14,7 @@ import com.oakkub.pointpoker.extensions.showIfFailThenAllowStateLoss
 import com.oakkub.pointpoker.helpers.SelectedColorSharedPreference
 import com.oakkub.pointpoker.ui.detail.SelectedPokerDialogFragment
 import com.oakkub.pointpoker.ui.settings.color.ChangeColorActivity
+import com.oakkub.simplepoker.R
 
 class MainActivity : Activity() {
 
@@ -82,7 +83,16 @@ class MainActivity : Activity() {
                     return@setOnItemSelectedListener
                 }
 
-                val dialog = SelectedPokerDialogFragment.create(it)
+                val textSize = if (it == coffeeEmoji) {
+                    resources.getDimension(R.dimen.poker_selected_item_point_emoji_text_size)
+                } else {
+                    when(it.length) {
+                        1 -> resources.getDimension(R.dimen.poker_selected_item_point_single_text_size)
+                        2 -> resources.getDimension(R.dimen.poker_selected_item_point_double_text_size)
+                        else -> resources.getDimension(R.dimen.poker_selected_item_point_text_size)
+                    }
+                }
+                val dialog = SelectedPokerDialogFragment.create(it, textSize)
                 dialog.showIfFailThenAllowStateLoss(fragmentManager, TAG_SELECTED_CARD_DIALOG)
             }
         }

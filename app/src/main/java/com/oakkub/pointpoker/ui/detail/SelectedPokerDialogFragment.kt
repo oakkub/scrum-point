@@ -22,21 +22,6 @@ import com.oakkub.simplepoker.R
  */
 class SelectedPokerDialogFragment : DialogFragment() {
 
-    companion object {
-        private const val ARGS_TEXT = "TEXT"
-        private const val STATE_DID_USER_SHAKE_DEVICE = "DID_USER_SHAKE_DEVICE"
-
-        @JvmStatic
-        fun create(text: String): SelectedPokerDialogFragment {
-            val args = Bundle()
-            args.putString(ARGS_TEXT, text)
-
-            val selectedPokerDialog = SelectedPokerDialogFragment()
-            selectedPokerDialog.arguments = args
-            return selectedPokerDialog
-        }
-    }
-
     private lateinit var pointDetailContainer: FrameLayout
     private lateinit var pointDetailTextView: TextView
     private lateinit var pointDetailMessageTextView: TextView
@@ -135,14 +120,35 @@ class SelectedPokerDialogFragment : DialogFragment() {
     }
 
     private fun displayPoint() {
+        val textSize = arguments?.getFloat(ARGS_TEXT_SIZE)
+                ?: resources.getDimension(R.dimen.poker_selected_item_point_text_size)
+
         pointDetailTextView.apply {
             text = arguments.getString(ARGS_TEXT)
-            setTextSizeInPixel(resources.getDimension(R.dimen.poker_selected_item_point_text_size))
+            setTextSizeInPixel(textSize)
             setOnClickListener {
                 dismissIfFailThenAllowStateLoss()
             }
         }
         pointDetailMessageTextView.text = getString(R.string.point_detail_touch_to_close)
+    }
+
+    companion object {
+
+        private const val ARGS_TEXT = "TEXT"
+        private const val ARGS_TEXT_SIZE = "TEXT_SIZE"
+        private const val STATE_DID_USER_SHAKE_DEVICE = "DID_USER_SHAKE_DEVICE"
+
+        @JvmStatic
+        fun create(text: String, textSize: Float): SelectedPokerDialogFragment {
+            val args = Bundle()
+            args.putString(ARGS_TEXT, text)
+            args.putFloat(ARGS_TEXT_SIZE, textSize)
+
+            val selectedPokerDialog = SelectedPokerDialogFragment()
+            selectedPokerDialog.arguments = args
+            return selectedPokerDialog
+        }
     }
 
 }
